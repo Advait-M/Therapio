@@ -7,6 +7,10 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from config import *
 import sys
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
+print(sid.polarity_scores("bad"))
+
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
 # Variables that contains the user credentials to access Twitter API 
@@ -21,7 +25,9 @@ class StdOutListener(StreamListener):
     def on_data(self, data):
 ##        print (data["text"])
         dictData = json.loads(data)
-        print(dictData["text"].translate(non_bmp_map))
+        text = dictData["text"].translate(non_bmp_map)
+        print(text)
+        print(sid.polarity_scores(text))
 ##        print(data)
         return True
 
