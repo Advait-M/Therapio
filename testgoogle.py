@@ -16,11 +16,17 @@ query_result = google_places.nearby_search(
 ##    print (query_result.html_attributions)
 ##
 ##
+counter = 0 
 for place in query_result.places:
     print(place.name)
-    print(place.geo_location)
-    place.get_details()
-    print(place.formatted_address)
+    if "Dr" == place.name[0:2]:
+        print(place.name)
+        print(place.geo_location)
+        place.get_details()
+        print(place.formatted_address)
+        counter += 1
+    if counter ==  5:
+        break
 ##    # Returned places from a query are place summaries.
 ##    print (place.name)
 ##    print (place.geo_location)

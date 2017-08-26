@@ -17,6 +17,7 @@ class StdOutListener(StreamListener):
 
     def on_data(self, data):
         dictData = json.loads(data)
+        print(dictData)
         text = dictData["text"].translate(non_bmp_map)
         user = dictData["user"]["name"].translate(non_bmp_map)
         print(user)
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     print("ready")
     stream.filter(follow=followers)
     if (sentiment_score < 0):
-        api.send_direct_message(screen_name = "saamirt", text="You need help.")
+        api.send_direct_message(screen_name = "AdvaitMaybhate", text="You need help.")
         print("help message was sent")
     else:
         print("help message was not sent")
