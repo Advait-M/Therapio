@@ -101,3 +101,9 @@ ENV/
 .mypy_cache/
 
 config.py
+
+node_modules/
+package.json
+public/
+views/
+index.js
