@@ -9,21 +9,13 @@ from config import *
 import sys
 import time
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-<<<<<<< HEAD
-=======
-sid = SentimentIntensityAnalyzer()
-
->>>>>>> 56c32abcbf31e7c84fe56d7f38ff1fdb81db851a
-
 sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 bot_handle = "TherapyChatBot"
 
-# This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
-##        print (data["text"])
         dictData = json.loads(data)
         text = dictData["text"].translate(non_bmp_map)
         user = dictData["user"]["name"].translate(non_bmp_map)
@@ -32,8 +24,7 @@ class StdOutListener(StreamListener):
         for item in sid.polarity_scores(text):
             print(item + ": " + str(sid.polarity_scores(text)[item]))
         sentiment_score = str(sid.polarity_scores(text)["pos"] - sid.polarity_scores(text)["neg"])
-        print(sentiment_score)
-##        print(data)
+        print("Sentiment score: %s" % (sentiment_score))
         return True
 
     def on_error(self, status):
@@ -42,16 +33,17 @@ class StdOutListener(StreamListener):
 
 
 if __name__ == '__main__':
-    # This handles Twitter authentication and connection to Twitter Streaming API
     l = StdOutListener()
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_key, access_secret)
     stream = Stream(auth, l)    
     api = tweepy.API(auth)
-<<<<<<< HEAD
+    
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
-=======
-    api.send_direct_message(screen_name = "AdvaitMaybhate", text="Hi")
->>>>>>> 56c32abcbf31e7c84fe56d7f38ff1fdb81db851a
+    if (sentiment_score < 0):
+        api.send_direct_message(screen_name = "saamirt", text="You need help.")
+        print("help message was sent")
+    else:
+        print("help message was not sent")
