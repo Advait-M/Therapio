@@ -7,17 +7,12 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from config import *
 import sys
+import time
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 sid = SentimentIntensityAnalyzer()
-print(sid.polarity_scores("bad"))
-
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
-
-# Variables that contains the user credentials to access Twitter API 
-##access_token = "INSERT ACCESS TOKEN"
-##access_token_secret = "INSERT ACCESS TOKEN SECRET"
-##consumer_key = "INSERT CONSUMER KEY"
-##consumer_secret = "INSERT CONSUMER SECRET"
+bot_handle = "TherapyChatBot"
 
 # This is a basic listener that just prints received tweets to stdout.
 class StdOutListener(StreamListener):
@@ -26,13 +21,18 @@ class StdOutListener(StreamListener):
 ##        print (data["text"])
         dictData = json.loads(data)
         text = dictData["text"].translate(non_bmp_map)
+        user = dictData["user"]["name"].translate(non_bmp_map)
+        print(user)
         print(text)
-        print(sid.polarity_scores(text))
+        for item in sid.polarity_scores(text):
+            print(item + ": " + str(sid.polarity_scores(text)[item]))
+        sentiment_score = str(sid.polarity_scores(text)["pos"] - sid.polarity_scores(text)["neg"])
+        print(sentiment_score)
 ##        print(data)
         return True
 
     def on_error(self, status):
-        print("s")
+        print("error")
         print (status)
 
 
@@ -43,4 +43,6 @@ if __name__ == '__main__':
     auth.set_access_token(access_key, access_secret)
     stream = Stream(auth, l)    
     api = tweepy.API(auth)
-    stream.filter(follow=[api.get_user("normanamadison").id_str])
+    followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
+    print("ready")
+    stream.filter(follow=followers)
