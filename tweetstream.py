@@ -9,6 +9,11 @@ from config import *
 import sys
 import time
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+<<<<<<< HEAD
+=======
+sid = SentimentIntensityAnalyzer()
+
+>>>>>>> 56c32abcbf31e7c84fe56d7f38ff1fdb81db851a
 
 sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
@@ -43,6 +48,10 @@ if __name__ == '__main__':
     auth.set_access_token(access_key, access_secret)
     stream = Stream(auth, l)    
     api = tweepy.API(auth)
+<<<<<<< HEAD
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
+=======
+    api.send_direct_message(screen_name = "AdvaitMaybhate", text="Hi")
+>>>>>>> 56c32abcbf31e7c84fe56d7f38ff1fdb81db851a
