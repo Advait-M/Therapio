@@ -1,8 +1,6 @@
 from googleplaces import GooglePlaces, types, lang
 from config import *
-YOUR_API_KEY = google_key
-
-google_places = GooglePlaces(YOUR_API_KEY)
+google_places = GooglePlaces(google_key)
 
 # You may prefer to use the text_search API, instead.
 query_result = google_places.nearby_search(

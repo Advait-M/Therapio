@@ -23,8 +23,13 @@ class StdOutListener(StreamListener):
         print(text)
         for item in sid.polarity_scores(text):
             print(item + ": " + str(sid.polarity_scores(text)[item]))
-        sentiment_score = str(sid.polarity_scores(text)["pos"] - sid.polarity_scores(text)["neg"])
+        sentiment_score = sid.polarity_scores(text)["pos"] - sid.polarity_scores(text)["neg"]
         print("Sentiment score: %s" % (sentiment_score))
+        if (sentiment_score < 0):
+            api.send_direct_message(screen_name = dictData["user"]["screen_name"].translate(non_bmp_map), text="You need help.")
+            print("help message was sent")
+        else:
+            print("help message was not sent")
         return True
 
     def on_error(self, status):
@@ -42,8 +47,3 @@ if __name__ == '__main__':
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
-    if (sentiment_score < 0):
-        api.send_direct_message(screen_name = "saamirt", text="You need help.")
-        print("help message was sent")
-    else:
-        print("help message was not sent")
