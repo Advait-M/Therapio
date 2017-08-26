@@ -1,6 +1,8 @@
 from twitter import *
 import time
 import config
+import sys
+non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
 #Instance Twitter
 twitter = Twitter(
@@ -11,7 +13,7 @@ def getTweets(handle):
 
     try:
         print("here")
-        results = twitter.statuses.user_timeline(screen_name = handle)
+        results = twitter.statuses.user_timeline(screen_name = handle, count = 50)
         print("2")
         if results != []:
 
@@ -28,7 +30,7 @@ def getTweets(handle):
             #print(uName)
 
             for status in results:
-                statii.append(status["text"])
+                statii.append(status["text"].translate(non_bmp_map))
 
             print(statii)
             print(len(statii))
