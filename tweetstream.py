@@ -9,7 +9,7 @@ from config import *
 import sys
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid = SentimentIntensityAnalyzer()
-print(sid.polarity_scores("bad"))
+
 
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 
@@ -43,4 +43,5 @@ if __name__ == '__main__':
     auth.set_access_token(access_key, access_secret)
     stream = Stream(auth, l)    
     api = tweepy.API(auth)
+    api.send_direct_message(screen_name = "AdvaitMaybhate", text="Hi")
     stream.filter(follow=[api.get_user("normanamadison").id_str])
