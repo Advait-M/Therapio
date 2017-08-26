@@ -47,3 +47,9 @@ if __name__ == '__main__':
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
+=======
+    if (sentiment_score < 0):
+        api.send_direct_message(screen_name = "AdvaitMaybhate", text="You need help.")
+        print("help message was sent")
+    else:
+        print("help message was not sent")
