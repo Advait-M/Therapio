@@ -12,11 +12,17 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 bot_handle = "TherapyChatBot"
-
+sentiment_score = 0
+text = ""
+user = ""
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
         dictData = json.loads(data)
+        if (len(dictData) == 1 and list(dictData)[0].lower() == "delete"):
+            print("Deleted Tweet")
+            sentiment_score = 0
+            return False
         text = dictData["text"].translate(non_bmp_map)
         user = dictData["user"]["name"].translate(non_bmp_map)
         print(user)
@@ -35,6 +41,7 @@ class StdOutListener(StreamListener):
     def on_error(self, status):
         print("error")
         print (status)
+        return False
 
 
 if __name__ == '__main__':
@@ -47,7 +54,6 @@ if __name__ == '__main__':
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
-=======
     if (sentiment_score < 0):
         api.send_direct_message(screen_name = "AdvaitMaybhate", text="You need help.")
         print("help message was sent")
