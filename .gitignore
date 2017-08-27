@@ -104,6 +104,8 @@ config.py
 config1.py
 config2.py
 config3.py
+configAAMIR.py
+giphy.py
 
 node_modules/
 package.json
