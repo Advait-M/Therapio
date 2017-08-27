@@ -101,7 +101,7 @@ for msg in twitter_userstream.user():
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I might not always be able to to understand, but I offer my compassion")
 
             elif fuzz.token_set_ratio("can't sleep", msg['direct_message']['text']) > 50:
-                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Just breathe, relax. Think of something peaceful and positive. You'll make it through this."
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Just breathe, relax. Think of something peaceful and positive. You'll make it through this.")
 
             elif fuzz.token_set_ratio("kill myself", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="DONT KILL YOURSELF THERE'S TOO MUCH TO LIVE FOR!")
