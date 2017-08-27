@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "tweetstream.py", line 114, in <module>
+    stream.filter(follow=followers)
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 445, in filter
+    self._start(async)
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 361, in _start
+    self._run()
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 294, in _run
+    raise exception
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 263, in _run
+    self._read_loop(resp)
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 324, in _read_loop
+    self._data(next_status_obj)
+  File "C:\Users\advai\AppData\Local\Programs\Python\Python35\lib\site-packages\tweepy\streaming.py", line 297, in _data
+    if self.listener.on_data(data) is False:
+  File "tweetstream.py", line 65, in on_data
+    text = dictData["text"].translate(non_bmp_map)
+KeyError: 'text'
