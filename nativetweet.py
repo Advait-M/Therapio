@@ -3,6 +3,8 @@ import os
 
 import oauth
 import config
+from fuzzywuzzy import fuzz
+
 #Create a new Twitter app first: https://apps.twitter.com/app/new
 
 
@@ -20,7 +22,7 @@ import config
 #twitter = Twitter(
 ##auth=OAuth(config.access_key, config.access_secret, config.consumer_key, config.consumer_secret))
 auth=OAuth(config.access_key, config.access_secret, config.consumer_key, config.consumer_secret)
-
+twitter_api = Twitter(auth=auth)
 twitter_userstream = TwitterStream(auth=auth, domain='userstream.twitter.com')
 print("here")
     
@@ -29,9 +31,11 @@ for msg in twitter_userstream.user():
 ##    print(msg)
     if 'direct_message' in msg:
         if msg['direct_message']['sender']['screen_name'] != "TherapyChatBot":
-            
+##            print(fuzz.token_set_ratio("kill myself", msg['direct_message']['text']))
+            if fuzz.token_set_ratio("kill myself", msg['direct_message']['text']) > 50:
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="DONT KILL YOURSELF THERE'S TOO MUCH TO LIVE FOR!")
             print (msg['direct_message']['text'])
-print("past")
+##print("past")
         
 
     

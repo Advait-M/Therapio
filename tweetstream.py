@@ -9,6 +9,8 @@ from config import *
 import sys
 import time
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import pymongo
+
 sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 bot_handle = "TherapyChatBot"
@@ -38,6 +40,7 @@ class StdOutListener(StreamListener):
             print("help message was not sent")
         print("Sentiment score: %s" % (sentiment_score))
         return True
+
     def on_error(self, status):
         print("error")
         print (status)
