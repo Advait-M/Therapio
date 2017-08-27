@@ -52,5 +52,4 @@ if __name__ == '__main__':
     
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
-    print(followers)
     stream.filter(follow=followers)
