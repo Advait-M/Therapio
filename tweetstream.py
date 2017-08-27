@@ -36,7 +36,6 @@ class StdOutListener(StreamListener):
             print("help message was not sent")
         time.sleep(5)
         return True
-
     def on_error(self, status):
         print("error")
         print (status)

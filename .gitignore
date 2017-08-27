@@ -101,6 +101,9 @@ ENV/
 .mypy_cache/
 
 config.py
+config1.py
+config2.py
+config3.py
 
 node_modules/
 package.json
