@@ -6,6 +6,7 @@ import tweepy
 from tweepy import OAuthHandler
 import config
 from fuzzywuzzy import fuzz
+from pymongo import MongoClient
 ##import tweetstream as ts
 
 #Create a new Twitter app first: https://apps.twitter.com/app/new
@@ -18,6 +19,11 @@ print("here")
 authi = OAuthHandler(config.consumer_key, config.consumer_secret)
 authi.set_access_token(config.access_key, config.access_secret)
 api = tweepy.API(authi)
+client = MongoClient()
+db = client["node-login"]
+cursor = db.accounts
+##print(type(cursor.find_one({"handle":"therapyChatBot"})))
+##print(cursor.find_one("handle":msg['direct_message']['sender']['screen_name']))
 
 followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name="TherapyChatBot").pages())[0]))
 print(followers)
@@ -45,6 +51,8 @@ for msg in twitter_userstream.user():
     if 'direct_message' in msg:
         if msg['direct_message']['sender']['screen_name'] != "TherapyChatBot":
             if fuzz.token_set_ratio("kill myself", msg['direct_message']['text']) > 50:
+                
+                    
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="DONT KILL YOURSELF THERE'S TOO MUCH TO LIVE FOR!")
             print (msg['direct_message']['text'])
 ##print("past")

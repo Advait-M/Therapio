@@ -1,10 +1,9 @@
-from googleplaces import GooglePlaces, types, lang
+
 from config import *
-google_places = GooglePlaces(google_key)
+
 
 # You may prefer to use the text_search API, instead.
-query_result = google_places.nearby_search(
-        location='Toronto, Ontario', keyword='psychiatrist')
+
 ##print(list(query_result))
 # If types param contains only 1 item the request to Google Places API
 # will be send as type param to fullfil:
@@ -14,17 +13,45 @@ query_result = google_places.nearby_search(
 ##    print (query_result.html_attributions)
 ##
 ##
-counter = 0 
-for place in query_result.places:
-    print(place.name)
-    if "Dr" == place.name[0:2]:
-        print(place.name)
-        print(place.geo_location)
-        place.get_details()
-        print(place.formatted_address)
-        counter += 1
-    if counter ==  5:
-        break
+
+
+# Create a list.
+##doctors = []
+
+# Append empty lists in first two indexes.
+##doctors.append([])
+##doctors.append([])
+##doctors.append([])
+from googleplaces import GooglePlaces, types, lang
+def nearbyDoctors(location):
+    google_places = GooglePlaces(google_key)
+    query_result = google_places.nearby_search(location=location, keyword='psychiatrist')
+    counter = 1
+    doctors = []
+    for place in query_result.places:
+        if "Dr" == place.name[0:2]:
+            place.get_details()
+            try:
+                phone = place.local_phone_number
+            except AttributeError:
+                continue
+            doctors += [str(counter) + ". Name: " + place.name, "Address: " + place.formatted_address, "Phone: " + phone]
+            counter += 1
+        if counter == 6:
+            break
+    return "Here's a list of nearby psychiatrists who can help you out:\n" + "\n".join(doctors) + "\nAccess on Google Maps: https://www.google.com/maps?q=nearby+psychiatrists"
+
+
+
+d = nearbyDoctors("Toronto, Ontario")
+print(d)
+##print(doctors)
+##for i, item in enumerate(doctors):
+##    for k in range(0,3,1):
+##        print(doctors[i][k])
+
+
+
 ##    # Returned places from a query are place summaries.
 ##    print (place.name)
 ##    print (place.geo_location)
