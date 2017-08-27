@@ -7,6 +7,7 @@ from tweepy import OAuthHandler
 import config
 from fuzzywuzzy import fuzz
 from pymongo import MongoClient
+import giphypop
 ##import tweetstream as ts
 
 #Create a new Twitter app first: https://apps.twitter.com/app/new
@@ -50,6 +51,9 @@ for msg in twitter_userstream.user():
     
     if 'direct_message' in msg:
         if msg['direct_message']['sender']['screen_name'] != "TherapyChatBot":
+            if fuzz.token_set_ratio("hello hi", msg['direct_message']['text']) > 50:
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Hey!")
+
             if fuzz.token_set_ratio("pain hurt inside", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="You’re not alone in this. We're here for you.")
 
@@ -67,11 +71,11 @@ for msg in twitter_userstream.user():
             elif fuzz.token_set_ratio("exhuasting battle", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="You'll make it through!")
 
-            elif fuzz.token_set_ratio("hurt myself", msg['direct_message']['text']) > 50:
-                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I'm sorry you're in so much pain. I won't leave you or abandon you.")
-
             elif fuzz.token_set_ratio("eat less starve", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Keep yourself well. You derseve it. You are the best person I know.")
+
+            elif fuzz.token_set_ratio("hurt myself", msg['direct_message']['text']) > 50:
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I'm sorry you're in so much pain. I won't leave you or abandon you.")
 
             elif fuzz.token_set_ratio("procrastinate", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I know how much you want to curl away from the world, but I'll be there with you every step of the way.")
