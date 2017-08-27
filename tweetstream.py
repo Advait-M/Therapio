@@ -12,15 +12,18 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 bot_handle = "TherapyChatBot"
-sentiment_score = 0
-class StdOutListener(StreamListener):
 
+class StdOutListener(StreamListener):
+    def on_direct_message(self, status):
+        print(status)
+        author = status.author.screen_name
+        api.send_direct_message(screen_name=author, text='response')
+
+        return True
+    
     def on_data(self, data):
         dictData = json.loads(data)
-        if (len(dictData) == 1 and list(dictData)[0].lower() == "delete"):
-            print("Deleted Tweet")
-            sentiment_score = 0
-            return False
+        print(dictData)
         text = dictData["text"].translate(non_bmp_map)
         user = dictData["user"]["name"].translate(non_bmp_map)
         print(user)
@@ -28,19 +31,17 @@ class StdOutListener(StreamListener):
         for item in sid.polarity_scores(text):
             print(item + ": " + str(sid.polarity_scores(text)[item]))
         sentiment_score = sid.polarity_scores(text)["pos"] - sid.polarity_scores(text)["neg"]
-        print("Sentiment score: %s" % (sentiment_score))
         if (sentiment_score < 0):
-            api.send_direct_message(screen_name = dictData["user"]["screen_name"].translate(non_bmp_map), text="You need help.")
+            api.send_direct_message(screen_name = dictData["user"]["screen_name"], text="You need help.")
             print("help message was sent")
         else:
             print("help message was not sent")
+        print("Sentiment score: %s" % (sentiment_score))
         return True
-        time.sleep(5)
 
     def on_error(self, status):
         print("error")
         print (status)
-        return False
 
 
 if __name__ == '__main__':
@@ -53,3 +54,4 @@ if __name__ == '__main__':
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
     stream.filter(follow=followers)
+    
