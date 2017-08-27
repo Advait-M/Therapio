@@ -4,6 +4,7 @@ import os
 import oauth
 import config
 from fuzzywuzzy import fuzz
+import giphypop
 
 #Create a new Twitter app first: https://apps.twitter.com/app/new
 
@@ -36,6 +37,8 @@ for msg in twitter_userstream.user():
             if fuzz.token_set_ratio("pain hurt inside", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="You’re not alone in this. We're here for you.")
 
+            elif fuzz.token_set_ratio("I love cats!", msg['direct_message']['text']) > 60:
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text=list(giphypop.Giphy().search("cats"))[0])
             elif fuzz.token_set_ratio("distance from friends family", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Keep yourself united with your loved ones. They will always be there to help you.")
 
