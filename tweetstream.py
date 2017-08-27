@@ -36,11 +36,7 @@ class StdOutListener(StreamListener):
             print("help message was sent")
         else:
             print("help message was not sent")
-<<<<<<< HEAD
         print("Sentiment score: %s" % (sentiment_score))
-=======
-        time.sleep(5)
->>>>>>> origin/master
         return True
 
     def on_error(self, status):
