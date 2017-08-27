@@ -38,7 +38,6 @@ class StdOutListener(StreamListener):
             print("help message was not sent")
         print("Sentiment score: %s" % (sentiment_score))
         return True
-
     def on_error(self, status):
         print("error")
         print (status)
