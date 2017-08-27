@@ -13,8 +13,6 @@ sid = SentimentIntensityAnalyzer()
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 bot_handle = "TherapyChatBot"
 sentiment_score = 0
-text = ""
-user = ""
 class StdOutListener(StreamListener):
 
     def on_data(self, data):
@@ -37,6 +35,7 @@ class StdOutListener(StreamListener):
         else:
             print("help message was not sent")
         return True
+        time.sleep(5)
 
     def on_error(self, status):
         print("error")
@@ -53,9 +52,5 @@ if __name__ == '__main__':
     
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
     print("ready")
+    print(followers)
     stream.filter(follow=followers)
-    if (sentiment_score < 0):
-        api.send_direct_message(screen_name = "AdvaitMaybhate", text="You need help.")
-        print("help message was sent")
-    else:
-        print("help message was not sent")
