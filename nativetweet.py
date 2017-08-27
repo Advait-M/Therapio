@@ -53,12 +53,16 @@ for msg in twitter_userstream.user():
         if msg['direct_message']['sender']['screen_name'] != "TherapyChatBot":
             if fuzz.token_set_ratio("hello hi", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Hey!")
+            
+            if fuzz.token_set_ratio("hurt myself", msg['direct_message']['text']) > 50:
+                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I'm sorry you're in so much pain. I won't leave you or abandon you.")
 
-            if fuzz.token_set_ratio("pain hurt inside", msg['direct_message']['text']) > 50:
+            elif fuzz.token_set_ratio("pain hurt inside", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="You’re not alone in this. We're here for you.")
 
             elif fuzz.token_set_ratio("I love cats!", msg['direct_message']['text']) > 60:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text=list(giphypop.Giphy().search("cats"))[0])
+            
             elif fuzz.token_set_ratio("distance from friends family", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Keep yourself united with your loved ones. They will always be there to help you.")
 
@@ -73,9 +77,6 @@ for msg in twitter_userstream.user():
 
             elif fuzz.token_set_ratio("eat less starve", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="Keep yourself well. You derseve it. You are the best person I know.")
-
-            elif fuzz.token_set_ratio("hurt myself", msg['direct_message']['text']) > 50:
-                twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I'm sorry you're in so much pain. I won't leave you or abandon you.")
 
             elif fuzz.token_set_ratio("procrastinate", msg['direct_message']['text']) > 50:
                 twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I know how much you want to curl away from the world, but I'll be there with you every step of the way.")
