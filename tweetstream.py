@@ -34,8 +34,8 @@ class StdOutListener(StreamListener):
             print("help message was sent")
         else:
             print("help message was not sent")
-        return True
         time.sleep(5)
+        return True
 
     def on_error(self, status):
         print("error")
@@ -51,5 +51,5 @@ if __name__ == '__main__':
     api = tweepy.API(auth)
     
     followers = list(map(str,list(tweepy.Cursor(api.followers_ids, screen_name=bot_handle).pages())[0]))
-    print("ready")
+    print("Ready")
     stream.filter(follow=followers)
