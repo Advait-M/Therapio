@@ -1,3 +1,13 @@
+from twitter import *
+import os
+
+import oauth
+import tweepy
+from tweepy import OAuthHandler
+import config
+from fuzzywuzzy import fuzz
+from pymongo import MongoClient
+import giphypop
 
 def sendMessages(msg):
     if fuzz.token_set_ratio("hello hi", msg['direct_message']['text']) > 50:
@@ -68,37 +78,6 @@ def sendMessages(msg):
 
     elif fuzz.token_set_ratio("sad", msg['direct_message']['text']) > 50:
         twitter_api.direct_messages.new(user=msg['direct_message']['sender']['screen_name'], text="I won't always know how you feel, but I care about you")
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-from twitter import *
-import os
-
-import oauth
-import tweepy
-from tweepy import OAuthHandler
-import config
-from fuzzywuzzy import fuzz
-from pymongo import MongoClient
-import giphypop
-##import tweetstream as ts
 
 #Create a new Twitter app first: https://apps.twitter.com/app/new
 auth=OAuth(config.access_key, config.access_secret, config.consumer_key, config.consumer_secret)
