@@ -1,3 +1,4 @@
+# Therapio
 ## Inspiration
 
 In todays society, mental health problems have become seriously profound. At least 1 in 4 Canadians will have some form of serious anxiety disorder at some point in their lives, with almost 3 million Canadians aged 18 years or older reporting to have depression or anxiety. Moreover, by age 40, about 50% of the population will have or have had a mental illness, and suicide is one of the leading causes of death in both men and women from adolescence to middle age.
